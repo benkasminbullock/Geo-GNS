@@ -1,6 +1,6 @@
 =head1 NAME
 
-Geo::GNS::Parser
+Geo::GNS::Parser - parse a GNS data file
 
 =cut
 package Geo::GNS::Parser;
@@ -39,12 +39,16 @@ sub parse_file
     my @data;
     open my $input, "<:encoding(utf8)", $file or die $!;
     while (<$input>) {
-        my @parts = split /\s+/;
+        my @parts = split /\t/;
+        if (@parts != 29) {
+            die "$file:$.: bad line containing " . scalar @parts . " parts.\n";
+        }
         my %line;
         @line{@fields} = @parts;
         my $ufi = $line{UFI};
         push @data, \%line;
     }
+    close $input or die $!;
     return \@data;
 }
 
