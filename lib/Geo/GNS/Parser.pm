@@ -9,6 +9,7 @@ require Exporter;
 @EXPORT_OK = qw/$data_dir parse_file/;
 use warnings;
 use strict;
+use Carp;
 our $VERSION = 0.01;
 
 our $data_dir = '/home/ben/data/gns';
@@ -23,33 +24,74 @@ NOTE MODIFY_DATE/;
 
 =head2 parse_file
 
-    my $data = parse_file ('ja.txt');
+    my $data = parse_file (file => 'ja.txt', data => \@array);
 
-Parse the data in F<ja.txt> and put the lines into an array. The
-return value is a reference to the array.
+Parse the data in the file specified by C<file> and put the lines into
+the array specified by the C<data> parameter. The return value is a
+reference to the array.
+
+Possible options are
+
+=over
+
+=item file
+
+The file name. This must be supplied or the module dies.
+
+=item data
+
+An array reference.
+
+=item callback
+
+A code reference to call back. If parse_file is called as
+
+    parse_file (%inputs);
+
+then the callback is called in the form
+
+    &{$inputs{callback}} ($inputs{callback_data}, \%line);
+
+where C<%line> is a hash containing the parts of the line.
+
+=item callback_data
+
+User-specified data to pass to the callback routine. See callback above.
+
+=back
 
 =cut
 
 sub parse_file
 {
-    my ($file) = @_;
+    my (%options) = @_;
+    my $file = $options{file};
+    my $data = $options{data};
+    my $callback = $options{callback};
+    my $callback_data = $options{callback_data};
+    if (! $file) {
+        croak "Specify a file with 'file =>'";
+    }
     if ($file !~ m!/!) {
         $file = "$data_dir/$file";
     }
-    my @data;
     open my $input, "<:encoding(utf8)", $file or die $!;
     while (<$input>) {
         my @parts = split /\t/;
         if (@parts != 29) {
-            die "$file:$.: bad line containing " . scalar @parts . " parts.\n";
+            die "$file:$.: bad line containing " . scalar (@parts) . " parts.\n";
         }
         my %line;
         @line{@fields} = @parts;
         my $ufi = $line{UFI};
-        push @data, \%line;
+        if ($callback) {
+            &{$callback} ($callback_data, \%line);
+        }
+        if ($data) {
+            push @$data, \%line;
+        }
     }
     close $input or die $!;
-    return \@data;
 }
 
 1;
