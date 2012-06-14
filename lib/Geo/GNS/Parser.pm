@@ -24,11 +24,17 @@ NOTE MODIFY_DATE/;
 
 =head2 parse_file
 
-    my $data = parse_file (file => 'ja.txt', data => \@array);
+    parse_file (file => 'ja.txt', data => \@array);
 
 Parse the data in the file specified by C<file> and put the lines into
-the array specified by the C<data> parameter. The return value is a
-reference to the array.
+the array specified by the C<data> parameter.
+
+    parse_file (file => 'af.txt', callback => \& myroutine);
+
+Parse the data in the file specified by C<file>. As each line of data
+is parsed, call back the code routine specified by C<callback>. The callback is called in the form
+
+    &{callback} (undef, \%line);
 
 Possible options are
 
