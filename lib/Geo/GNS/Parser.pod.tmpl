@@ -1,0 +1,84 @@
+[% MACRO example(file) BLOCK %]
+[%- pl = file _ ".pl" -%]
+[%- out = file _ "-out.txt" -%]
+[% INCLUDE $pl | xtidy %]
+
+(This example is included as L<F<[% pl %]>|https://fastapi.metacpan.org/source/BKB/[% info.name %]-[% info.version %]/examples/[% pl %]> in the distribution.)
+[% END %]
+[% start_year = 2012 %]
+=head1 NAME
+
+Geo::GNS::Parser - parse a GNS data file
+
+=head1 SYNOPSIS
+
+[% example("synopsis") %]
+
+=head1 DESCRIPTION
+
+Parse the GeoNET Names Server data
+
+=head1 FUNCTIONS
+
+=head2 parse_file
+
+    parse_file (file => 'ja.txt', data => \@array);
+
+Parse the data in the file specified by C<file> and put the lines into
+the array specified by the C<data> parameter.
+
+    parse_file (file => 'af.txt', callback => \& myroutine);
+
+Parse the data in the file specified by C<file>. As each line of data
+is parsed, call back the code routine specified by C<callback>. The
+callback is called in the form
+
+    &{callback} (undef, \%line);
+
+Possible options are
+
+=over
+
+=item file
+
+The file name. This must be supplied or the module dies.
+
+=item data
+
+An array reference.
+
+=item callback
+
+A code reference to call back. If parse_file is called as
+
+    parse_file (%inputs);
+
+then the callback is called in the form
+
+    &{$inputs{callback}} ($inputs{callback_data}, \%line);
+
+where C<%line> is a hash containing the parts of the line.
+
+=item callback_data
+
+User-specified data to pass to the callback routine. See l</callback>
+above.
+
+=back
+
+=head1 SEE ALSO
+
+=over
+
+=item GeoNet Names Server
+
+L<http://geonames.nga.mil/gns/html/>
+
+=item geolocator
+
+L<Geolocator|https://pypi.python.org/pypi/geolocator/> is a
+Python project using this data.
+
+=back
+
+[% INCLUDE "author" %]
