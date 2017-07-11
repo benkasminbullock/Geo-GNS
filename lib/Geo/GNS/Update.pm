@@ -9,10 +9,10 @@ require Exporter;
 @EXPORT_OK = qw//;
 use warnings;
 use strict;
-our $VERSION = 0.01;
+our $VERSION = '0.01';
 
 # This is the base URL for the downloads.
 
-my $base_url = 'http://earth-info.nga.mil/gns/html/cntyfile';
+my $base_url = 'http://geonames.nga.mil/gns/html/';
 
 1;
