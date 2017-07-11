@@ -3,3 +3,5 @@ Makefile
 README
 examples/*-out.txt
 lib/Geo/GNS/Parser.pod
+Geo-GNS-Parser-[0-9]*
+MANIFEST
