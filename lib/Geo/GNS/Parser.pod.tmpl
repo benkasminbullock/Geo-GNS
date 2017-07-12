@@ -14,6 +14,12 @@ Geo::GNS::Parser - parse a GNS data file
 
 [% example("synopsis") %]
 
+=head1 VERSION
+
+This documents [% info.colon %] version [% info.version %]
+corresponding to git commit L<[% commit.commit %]|[% info.repo
+%]/commit/[% commit.commit %]> released on [% commit.date %].
+
 =head1 DESCRIPTION
 
 Parse the GeoNET Names Server data
@@ -25,7 +31,9 @@ Parse the GeoNET Names Server data
     parse_file (file => 'ja.txt', data => \@array);
 
 Parse the data in the file specified by C<file> and put the lines into
-the array specified by the C<data> parameter.
+the array specified by the C<data> parameter. Each line is added to
+the array as a hash reference with the keys given under L</FIELDS>,
+and the values taken from the read line.
 
     parse_file (file => 'af.txt', callback => \& myroutine);
 
@@ -58,7 +66,7 @@ then the callback is called in the form
     &{$inputs{callback}} ($inputs{callback_data}, \%line);
 
 where C<%line> is a hash containing the parts of the line as specified
-under L</Fields>.
+under L</FIELDS>.
 
 =item callback_data
 
@@ -67,7 +75,7 @@ above.
 
 =back
 
-=head2 Fields
+=head1 FIELDS
 
 The fields in the data are as follows. The meanings of each field are
 explained at
