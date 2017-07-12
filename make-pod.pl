@@ -7,6 +7,8 @@ use Perl::Build qw/get_info get_commit/;
 use Perl::Build::Pod ':all';
 use Deploy qw/do_system older/;
 use Getopt::Long;
+use lib '/home/ben/projects/geo-gns/lib';
+use Geo::GNS::Parser '@fields';
 my $ok = GetOptions (
     'force' => \my $force,
     'verbose' => \my $verbose,
@@ -35,6 +37,7 @@ my $output = "$Bin/$pod";
 my %vars = (
     info => $info,
     commit => $commit,
+    fields => \@fields,
 );
 
 my $tt = Template->new (

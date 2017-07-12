@@ -3,16 +3,16 @@ use warnings;
 use strict;
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw/parse_file/;
+our @EXPORT_OK = qw/parse_file @fields/;
 use Carp;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our $data_dir = '/home/ben/data/gns';
 
-# See L<http://earth-info.nga.mil/gns/html/gis_countryfiles.html> for
+# See L<http://geonames.nga.mil/gns/html/gis_countryfiles.html> for
 # explanations.
 
-my @fields = qw/RC UFI UNI LAT LONG DMS_LAT DMS_LONG MGRS JOG FC DSG
+our @fields = qw/RC UFI UNI LAT LONG DMS_LAT DMS_LONG MGRS JOG FC DSG
 PC CC1 ADM1 POP ELEV CC2 NT LC SHORT_FORM GENERIC SORT_NAME_RO
 FULL_NAME_RO FULL_NAME_ND_RO SORT_NAME_RG FULL_NAME_RG FULL_NAME_ND_RG
 NOTE MODIFY_DATE/;

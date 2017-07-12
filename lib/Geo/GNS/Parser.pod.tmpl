@@ -57,12 +57,29 @@ then the callback is called in the form
 
     &{$inputs{callback}} ($inputs{callback_data}, \%line);
 
-where C<%line> is a hash containing the parts of the line.
+where C<%line> is a hash containing the parts of the line as specified
+under L</Fields>.
 
 =item callback_data
 
 User-specified data to pass to the callback routine. See l</callback>
 above.
+
+=back
+
+=head2 Fields
+
+The fields in the data are as follows. The meanings of each field are
+explained at
+L<http://geonames.nga.mil/gns/html/gis_countryfiles.html>.
+
+=over
+
+[% FOR field IN fields %]
+
+=item [% field %]
+
+[% END %]
 
 =back
 
@@ -78,6 +95,21 @@ L<http://geonames.nga.mil/gns/html/>
 
 L<Geolocator|https://pypi.python.org/pypi/geolocator/> is a
 Python project using this data.
+
+=back
+
+=head1 HISTORY
+
+=over
+
+=item PrePAN
+
+I proposed this module in 2012 on PrePAN:
+L<http://prepan.org/module/429En4oFbE>.
+
+=item CPAN
+
+I released this module to CPAN in July 2017.
 
 =back
 
