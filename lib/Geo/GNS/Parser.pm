@@ -38,7 +38,6 @@ sub parse_file
         }
         my %line;
         @line{@fields} = @parts;
-        my $ufi = $line{UFI};
         if ($callback) {
             &{$callback} ($callback_data, \%line);
         }
